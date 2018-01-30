@@ -1,6 +1,6 @@
-clc
-clear
-close all
+% clc
+% clear
+% close all
 format long
 %初始化各项参数
 left = 0;                          %区间左端点

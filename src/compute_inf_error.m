@@ -1,4 +1,5 @@
 function error=compute_inf_error(exact_solution_fun, solution,P,T,Tb, basis_type, der)
+%¼ÆËãÎŞÇî·¶ÊıÎó²î
 number_of_elements = size(T,2);
 for n=1:number_of_elements
     

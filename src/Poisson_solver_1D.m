@@ -9,7 +9,7 @@ function [solution,error] = Poisson_solver_1D(left,right,h,basis_type_trial,basi
 % der_test = 1;                      %测试函数的导数阶
 
 N=(right-left)/h;                  %区间段数
-basis_type = 102;                  %基函数类型
+basis_type = basis_type_trial;                  %基函数类型
 [P,T] = generate_PT_1D(left, right, h,basis_type);                         %P矩阵存储节点编号及坐标，T矩阵存储每个单元的节点号，按一定的规则排序
 [Pb,Tb] = generate_PbTb_1D(left, right, h,basis_type);                     %Pb矩阵存储有限元节点及坐标，Tb矩阵存储每个单元的有限元节点号，按一定的规则排序
 boundarynodes = generate_boundarynodes(N, basis_type);                     %生成边界点，存储对应的边界点类型以及边界点的有限元编号
