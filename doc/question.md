@@ -4,7 +4,21 @@
 
 $ -\frac{d}{dx}(c(x)\frac{du(x)}{dx}) = f(x), a<x<b$
 
-$u(a) = g_a, u(b) = g_b$
+为保证解的适定性(存在、唯一、稳定)还需要加上适当的边界条件, 如
+
+- Dirichlet边界条件
+
+  $u(a)=g_a, u(b)=g_b.$
+
+- Neumann边界条件
+
+  $u(a)=g_a, u'(b)=r_b$或$u'(a)=r_a, u(b)=g_b.$
+
+- Robin边界条件
+
+  $u(a)=g_a, u'(b)+q_bu(b)=p_b$或$u'(a)+q_au(a)=p_a, u(b)=g_b.$
+
+###弱形式
 
 对此方程两边同时乘以测试函数$v(x)$, 并在区间$[a,b]$上积分  则有
 
@@ -18,7 +32,51 @@ $\int^b_a(cu')'vdx = \int^b_avd(cu' ) = cu'v|^b_a-\int^b_acu'v'dx$
 
 $-c(b)u'(b)v(b)+c(a)u'(a)v(a)+\int^b_acu'v'dx=\int^b_afvdx$
 
-令$a(u,v)=\int^b_acu'v', F(v)=\int^b_afvdx+c(b)u'(b)v(b)-c(a)u'(a)v(a)$
+令$a(u,v)=\int^b_acu'v'dx, F(v)=\int^b_afvdx+c(b)u'(b)v(b)-c(a)u'(a)v(a)$
 
-对Dirichlet边界条件
+测试函数的选择需要满足最终形成的方程的个数等于未知数的个数, 因此我们如果想要求解该点处的未知量就需要对该点做测试, 如果该点为已知点，则不做测试，即令该点的测试函数的值为0.
+
+- Dirichlet边界条件:$u(a) = g_a, u(b) = g_b$.
+
+   选择测试函数$v(x)$使得$v(a)=v(b)=0$, 则此时
+
+  $a(u,v) = \int^b_acu'v'dx, F(v) = \int^b_afvdx.$
+
+
+- Neumann边界条件:$u(a) = g_a, u'(b) = r_b$.
+
+  选择测试函数$v(x)$使得$v(a) = 0$, 则此时
+
+  $a(u,v) = \int^b_acu'v'dx, F(v) = \int^b_afvdx+c(b)u'(b)v(b)=\int^b_afvdx+c(b)r(b)v(b)$
+
+
+- Robin边界条件:$u(a) = g_a, u'(b)+q_bu(b)=p_b$.
+
+  选择测试函数$v(x)$使得$v(a)=0$,则此时
+
+  $a(u,v) = \int^b_acu'v'dx, F(v) = \int^b_afvdx+c(b)u'(b)v(b)=\int^b_afvdx+c(b)(p_b-q_bu(b))v(b)$.
+
+我们称$a(u,v)=F(v)$为上述方程的弱形式. 那么$u, v$应该属于什么函数空间? 为了保证上面的各式是有意的, 则在上面的推导过程中所有的积分应该是有限的, 因此所给的函数$u, v$应该满足$u\in H^1(I), $$v\in H^1(I), v(a)=v(b)=0$. 可以严格写下方程的弱形式:
+
+&emsp;&emsp;求$u\in H^1(I)$使得$a(u,v)=F(v)$对任意$v\in H^1_0(I)$成立, 其中$I=(a,b)$.
+
+### 有限元离散
+
+&emsp;&emsp;上述函数空间均是无穷维空间, 在实际计算中我们无法求解, 有限元Galerkin方法的思想就是用有限维空间去逼近无穷维空间, 假设存在有限维空间$U_h\subset H^1[a,b]$, 则有如下的Galekin形式:
+
+&emsp;&emsp;求$u_h\in U_h$使得$a(u_h,v_h)=F(v_h)$对任意$v_h\in U_h$.
+
+对区间$[a,b]$作一致剖分, 分为$N$等分, 则分割的大小为$h=\frac{(b-a)}{N}$. $x_i=a+(i-1)h,$ $i=1,...,$$N+1$表示网格节点, $E_n=[x_n, x_{n+1}], n=1,...,N.$表示网格单元.
+
+定义一维线性有限元空间:
+
+&emsp;&emsp;$U_h= \{\phi\in C[a,b], \phi(x)在每个网格单元E_n上是线性的, n=1,...,N.\}$
+
+对有限维空间总可以找到它的一组基将它线性表出, 我们可以证明$U_h$是$C[a,b]$的$N+1$维子空间. 证明如下:
+
+&emsp;&emsp;首先, $U_h$是$C[a,b]$的子空间是显然的(真的是显然的).
+
+&emsp;&emsp;其次, 我们可以找到$U_h$的$N+1$个连续的分段线性基函数, 则证明完成.
+
+&emsp;&emsp;考虑$\phi_j(x_i)=\delta_{ij}$
 
