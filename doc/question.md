@@ -18,7 +18,7 @@ $ -\frac{d}{dx}(c(x)\frac{du(x)}{dx}) = f(x), a<x<b$
 
   $u(a)=g_a, u'(b)+q_bu(b)=p_b$或$u'(a)+q_au(a)=p_a, u(b)=g_b.$
 
-###弱形式
+### 弱形式
 
 对此方程两边同时乘以测试函数$v(x)$, 并在区间$[a,b]$上积分  则有
 
@@ -78,5 +78,27 @@ $-c(b)u'(b)v(b)+c(a)u'(a)v(a)+\int^b_acu'v'dx=\int^b_afvdx$
 
 &emsp;&emsp;其次, 我们可以找到$U_h$的$N+1$个连续的分段线性基函数, 则证明完成.
 
-&emsp;&emsp;考虑$\phi_j(x_i)=\delta_{ij}$
+&emsp;&emsp;考虑$\phi_j(x_i)=\delta_{ij} = \begin{cases} 1, &\text{if $i=j$} \\ 0, &\text{if $i\neq j$} \end{cases}$, 帽子函数(hat function), $$
+
+事实上, 
+
+&emsp;&emsp;$\phi_1(x)=\begin{cases}\frac{x_2-x}{h}, &\text{if  $x_1\leq x\leq x_2$}, \\ 0, &\text{otherwise}.\end{cases}$
+
+&emsp;&emsp;$\phi_j(x)=\begin{cases}\frac{x-x_{j-1}}{h}, &\text{if $x_{j-1}\leq x\leq x_j$},\\ \frac{x_{j+1}-x}{h},&\text{if $x_j\leq x\leq x_{j+1}$}, \\ 0,&\text{otherwise}.\end{cases}$
+
+&emsp;&emsp;$\phi_{N+1}(x)=\begin{cases} \frac{x-x_N}{h}, &\text{if $x_N\leq x\leq x_{N+1}$},\\ 0,&\text{otherwise}.\end{cases}$
+
+下面说明$\phi_i,i=1,...,N+1.$是$U_h$的一组基(只需要说明两点1.线性无关, 2.任意的$f\in U_h$, 均能由其唯一的线性表出):
+
+&emsp;&emsp;考虑$\sum_{j=1}^{N+1}c_j\phi_j(x)=0,\text{for $\forall x \in [a,b].$}$令$x=x_i,(i=1,...,N+1.)$ , 则有$c_i=0,i=1,...,N+1.$所以其线性无关.
+
+&emsp;&emsp;$\forall f \in U_h$, 考虑$g(x)=\sum_{j=1}^{N+1}f(x_i)\phi_j(x).$则有
+
+$g(x_i)=f(x_i),i=1,...,N+1.$且由于$f(x)$和$g(x)$在$[x_i,x_{i+1}],i=1,...,N.$是线性的, 所以
+
+&emsp;&emsp;$f(x)=g(x), [x_i,x_{i+1}], i=1,...,N.$
+
+即, $f(x)=g(x)=\sum_{i=1}^{N+1}f(x_i)\phi_i(x)$.
+
+证毕!
 
