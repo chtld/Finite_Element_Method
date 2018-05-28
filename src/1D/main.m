@@ -6,8 +6,8 @@ format long
 left = 0;                          %区间左端点
 right = 1;                         %区间右端点
 Gauss_type=4;                      %高斯积分的类型，选择几点的高斯积分
-basis_type_trial = 102;            %试探函数基函数类型
-basis_type_test = 102;             %测试函数基函数类型
+basis_type_trial = 101;            %试探函数基函数类型
+basis_type_test = 101;             %测试函数基函数类型
 der_trial = 1;                     %试探函数导数阶
 der_test = 1;                      %测试函数的导数阶
 
