@@ -10,9 +10,4 @@ end
 
 end
 
-function result = Robin_fun_pb(x)
-result = 1;
-end
-function result = Robin_fun_qb(x)
-result = 1;
-end
+

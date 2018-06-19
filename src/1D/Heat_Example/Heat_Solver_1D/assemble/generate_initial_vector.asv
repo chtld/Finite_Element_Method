@@ -1,0 +1,5 @@
+function x = genetate_initial_vector(Pb, initial)
+number_of_nodes = size(Pb, 2);
+x = zeros(number_of_nodes, 1);
+for i+1
+end

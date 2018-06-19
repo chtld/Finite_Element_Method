@@ -1,5 +1,9 @@
 function [solution,error] = Poisson_solver_1D(left,right,h,basis_type_trial,basis_type_test,der_trial,der_test,Gauss_type)
-%一维possion方程求解器
+% 一维possion方程求解器
+% 主要来求解如下形式的方程
+% $-\nabla \cdot c(x) \nabla u(x) = f(x),a\le x\le b$
+%$u(a)=g_a$,
+%$u'(b)+q_bu(b)=p_b$
 % left = 0;                          %区间左端点
 % right = 1;                         %区间右端点
 % Gauss_type=4;                      %高斯积分的类型，选择几点的高斯积分
@@ -17,14 +21,15 @@ boundarynodes = generate_boundarynodes(N, basis_type);                     %生成
 %------------------------------组装器--------------------------------------%
 %矩阵组装器
 matrix_size = [size(Pb,2), size(Pb,2)];                                          %刚度矩阵的大小
-A = assemble_matrix_volume_in_1D('function_c',matrix_size,P,T,Pb,Tb,basis_type_trial,der_trial,basis_type_test,der_test,Gauss_type);
+A = assemble_matrix_volume_in_1D('coefficient_fun_c',matrix_size,P,T,Pb,Tb,basis_type_trial,der_trial,basis_type_test,der_test,Gauss_type);
 %向量组装器
 vector_size = size(Pb,2);                                                        %右端向量的大小
-b = assemble_vector_1D_volume_in_1D('function_f',P,T,Pb,Tb,vector_size,basis_type_test,Gauss_type);
+b = assemble_vector_1D_volume_in_1D('righthand_fun_f',P,T,Pb,Tb,vector_size,basis_type_test,Gauss_type);
 %----------------------------处理边界条件----------------------------------%
 %边界条件处理
-[ A, b ] = treat_Neumann_boundary( A, b, boundarynodes,'function_c','exact1',Pb);%处理Neumann边界条件    
-[ A, b ] = treat_Dirichlet_boundary(A, b, boundarynodes,'function_g',Pb);           %处理Dirichlet边界
+[ A, b ] = treat_Robin_boundary( A, b, boundarynodes,'coefficient_fun_c','Robin_fun_pb','Robin_fun_qb',Pb);
+[ A, b ] = treat_Neumann_boundary( A, b, boundarynodes,'coefficient_fun_c','Neumann_fun_rb',Pb);%处理Neumann边界条件    
+[ A, b ] = treat_Dirichlet_boundary(A, b, boundarynodes,'Dirichlet_fun_g',Pb);           %处理Dirichlet边界
 %----------------------------解线性方程组----------------------------------%
 solution = A\b;
 %---------------------------计算误差---------------------------------------%
