@@ -52,8 +52,8 @@ solution  = x_next;
 %ŒÛ≤Óº∆À„
 %error = compute_error_on_nodes('exact',Pb,solution);
 error = compute_inf_error('exact', solution,P,T,Tb, basis_type, 0, final);                       %º∆À„Œﬁ«Ó∑∂ ˝ŒÛ≤Ó
-error = max(error);
-% L2_error = compute_Hs_error('exact', solution,P,T, Tb, basis_type, 0,Gauss_type);         %º∆À„L2∑∂ ˝ŒÛ≤Ó
-% H1_semi_error = compute_Hs_error('exact1', solution,P,T, Tb, basis_type, 1,Gauss_type);   %º∆À„H1∞Î∑∂ŒÛ≤Ó
-% fprintf('%7.4e  %7.4e  %7.4e\n',inf_error,L2_error,H1_semi_error);
+inf_error = max(error);
+L2_error = compute_Hs_error('exact', solution,P,T, Tb, basis_type, 0,Gauss_type,final);         %º∆À„L2∑∂ ˝ŒÛ≤Ó
+H1_semi_error = compute_Hs_error('exact1', solution,P,T, Tb, basis_type, 1,Gauss_type,final);   %º∆À„H1∞Î∑∂ŒÛ≤Ó
+fprintf('%7.4e  %7.4e  %7.4e\n',inf_error,L2_error,H1_semi_error);
 end
