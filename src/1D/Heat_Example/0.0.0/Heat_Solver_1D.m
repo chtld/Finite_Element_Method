@@ -28,8 +28,8 @@ vector_size = size(Pb,2);                                                  %右端
 for i = 0: 1: Mt-1
     t = initial+(i+1)*dt;
     %矩阵组装器
-    A_now = assemble_matrix_volume_in_1D('coefficient_fun_c2',matrix_size,P,T,Pb,Tb,basis_type_trial,der_trial,basis_type_test,der_test,Gauss_type, t-dt);
-    A_next = assemble_matrix_volume_in_1D('coefficient_fun_c2',matrix_size,P,T,Pb,Tb,basis_type_trial,der_trial,basis_type_test,der_test,Gauss_type, t);
+    A_now = assemble_matrix_volume_in_1D('coefficient_fun_c2',matrix_size,P,T,Pb,Tb,basis_type_trial,1,basis_type_test,1,Gauss_type, t-dt);
+    A_next = assemble_matrix_volume_in_1D('coefficient_fun_c2',matrix_size,P,T,Pb,Tb,basis_type_trial,1,basis_type_test,1,Gauss_type, t);
     %向量组装器
     b_now = assemble_vector_1D_volume_in_1D('righthand_fun_f',P,T,Pb,Tb,vector_size,basis_type_test,Gauss_type,t-dt);
     b_next = assemble_vector_1D_volume_in_1D('righthand_fun_f',P,T,Pb,Tb,vector_size,basis_type_test,Gauss_type,t);
@@ -37,13 +37,14 @@ for i = 0: 1: Mt-1
     %边界条件处理
 %     [ A_now, b_now ] = treat_Robin_boundary( A, b, boundarynodes,'coefficient_fun_c','Robin_fun_pb','Robin_fun_qb',Pb);
 %     [ A_now, b_now ] = treat_Neumann_boundary( A, b, boundarynodes,'coefficient_fun_c','Neumann_fun_rb',Pb);%处理Neumann边界条件    
-%     [ A_now, b_now ] = treat_Dirichlet_boundary(A, b, boundarynodes,'Dirichlet_fun_g',Pb);           %处理Dirichlet边界
+%      [ A_now, b_now ] = treat_Dirichlet_boundary(A_now, b_now, boundarynodes,'Dirichlet_fun_g',Pb,t);           %处理Dirichlet边界
 %     [ A_next, b_next ] = treat_Robin_boundary( A, b, boundarynodes,'coefficient_fun_c','Robin_fun_pb','Robin_fun_qb',Pb);
 %     [ A_next, b_next ] = treat_Neumann_boundary( A, b, boundarynodes,'coefficient_fun_c','Neumann_fun_rb',Pb);%处理Neumann边界条件    
-%     [ A_next, b_next ] = treat_Dirichlet_boundary(A, b, boundarynodes,'Dirichlet_fun_g',Pb);           %处理Dirichlet边界
+%      [ A_next, b_next ] = treat_Dirichlet_boundary(A_next, b_next, boundarynodes,'Dirichlet_fun_g',Pb,t);           %处理Dirichlet边界
 %     %----------------------------解线性方程组----------------------------------%
     A_tilde = M/dt + theta*A_next;
     b_tilde = theta*b_next+(1-theta)*b_now+M/dt*x_now-(1-theta)*A_now*x_now;
+    [A_tilde, b_tilde ] = treat_Dirichlet_boundary(A_tilde, b_tilde, boundarynodes,'Dirichlet_fun_g',Pb,t);           %处理Dirichlet边界
     x_next = A_tilde\b_tilde;
     x_now = x_next;
 end

@@ -1,7 +1,7 @@
 function [ result ] = exact1( x, t )
 %EXACT1 此处显示有关此函数的摘要
 %   精确解解的一阶导函数
-result = -pi*exp(-pi^2*t)*sin(pi*x);
+result = 2*x;
 
 end
 

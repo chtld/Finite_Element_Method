@@ -1,3 +1,3 @@
 function result = initial_fun(x,t)
-result = cos(pi*x);
+result = 1 + x^2;
 end
