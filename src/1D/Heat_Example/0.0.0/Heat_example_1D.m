@@ -13,7 +13,7 @@ initial = 0;                       %初始时刻，终止时刻，时间步长
 final = 0.2;
 dt = 0.1;
                                    %在时间方向使用theta格式
-theta = 1;
+theta = 1.0;
 
 Gauss_type = 4;                    %高斯积分的类型，选择几点的高斯积分
 basis_type_trial = 101;            %试探函数基函数类型

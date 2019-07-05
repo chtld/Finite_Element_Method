@@ -23,8 +23,8 @@ int main (){
 
 	//NOTE: This is where you define the number of elements in the mesh
 	std::vector<unsigned int> num_of_elems(dimension);
-	num_of_elems[0] = 15;
-	num_of_elems[1] = 40; //For example, a 4 x 8 element mesh in 2D
+	num_of_elems[0] = 5;
+	num_of_elems[1] = 13; //For example, a 4 x 8 element mesh in 2D
 
     problemObject.generate_mesh(num_of_elems);
 	problemObject.setup_system();

@@ -348,7 +348,7 @@ void FEM<dim>::assemble_system(){
 	        for(unsigned int A=0; A<dofs_per_elem; A++){
 	        //You would define Flocal here if it were nonzero.
             f = righthandside(x);
-            Flocal(A) += f*basis_function(A, quad_points[q1], quad_points[q2], quad_points[3])*detJ;
+            Flocal(A) += f*basis_function(A, quad_points[q1], quad_points[q2], quad_points[q3])*detJ* quad_weight[q1] * quad_weight[q2] * quad_weight[q3];
 	        }
 	      }
       }
@@ -390,7 +390,8 @@ void FEM<dim>::assemble_system(){
                       Klocal(A,B) += -basis_gradient(A,quad_points[q1],quad_points[q2],quad_points[q3])[I]
                                   * invJacob(I, i)*kappa[i][j]
                                   * basis_gradient(B,quad_points[q1],quad_points[q2],quad_points[q3])[J]
-                                  * invJacob(J, j)*detJ;
+                                  * invJacob(J, j)*detJ
+								  * quad_weight[q1] * quad_weight[q2] * quad_weight[q3];
 		                }
 		              }
 		            }
