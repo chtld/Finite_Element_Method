@@ -31,12 +31,12 @@ b4 = @(x, y) ((y == mesh.top) .* s4(x, y));
 pde.bdry.u_dirichlet = @(x, y) (b1(x, y) + b2(x, y) + b3(x, y) + b4(x, y));
 
 %%
-FE.basis_type_test = 201;
-FE.basis_type_trial = 201;
+FE.basis_type_test = 202;
+FE.basis_type_trial = 202;
 FE.Gauss_type = 4;
 
 %%
-ns = [4, 8, 16, 32, 64];
+ns = [1, 2, 4, 8, 16, 32, 64];
  fprintf('h        L_inf_err         L2_err        H1_err\n');
 for i = 1: length(ns)
     mesh.hx = 1.0 / ns(i);

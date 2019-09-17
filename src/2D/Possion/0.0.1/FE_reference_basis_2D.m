@@ -61,77 +61,83 @@ elseif basis_type==202
        else
            error('no such basis fun');
        end
-     elseif basis_index==2
-       if der_x==0&&der_y==0
-           result=2*x^2-x;    
-       elseif der_x==1&&der_y==0
-           result=4*x-1;
-       elseif der_x==2&&der_y==0
-           result=4;
-       elseif der_y>=1||der_x>=3
+     elseif basis_index == 2
+       if der_x == 0 && der_y == 0
+           result = 2 * x^2 - x;    
+       elseif der_x == 1 && der_y == 0
+           result = 4 * x - 1;
+       elseif der_x == 0 && der_y == 1
+           result = 0;
+       elseif der_x == 1 && der_y == 1
+           result = 0;
+       elseif der_x == 2 && der_y == 0
+           result = 4;
+       elseif der_x == 0 && der_y == 2
+           result = 0;
+       elseif (der_y + der_x) >= 3
+           result = 0;
+       else
+           error('no such basis fun');
+       end
+     elseif basis_index == 3
+       if der_x == 0 && der_y == 0
+           result = 2 * y^2 - y;    
+       elseif der_y == 1 && der_x==0
+           result = 4 * y - 1;
+       elseif der_y == 2 && der_x == 0
+           result = 4;
+       elseif der_x >= 1 || der_y >= 3
            result=0;
        else
            error('no such basis fun');
        end
-     elseif basis_index==3
-       if der_x==0&&der_y==0
-           result=2*y^2-y;    
-       elseif der_y==1&&der_x==0
-           result=4*y-1;
-       elseif der_y==2&&der_x==0
-           result=4;
-       elseif der_x>=1||der_y>=3
-           result=0;
-       else
-           error('no such basis fun');
-       end
-     elseif basis_index==4
-       if der_x==0&&der_y==0
-           result=-4*x^2-4*x*y+4*x;    
-       elseif der_x==1&&der_y==0
-           result=-8*x-4*y+4;
-       elseif der_y==1&&der_x==0
-           result=-4*x;
-       elseif der_x==1&&der_y==1
-           result=-4;
-       elseif der_x==2&&der_y==0
-           result=-8;
-       elseif der_y==2&&der_x==0
-           result=0;
-       elseif der_x+der_y>=3
-           result =0;
-       else
-           error('no such basis fun');
-       end
-     elseif basis_index==5
-       if der_x==0&&der_y==0
-           result=4*x*y;    
-       elseif der_x==1&&der_y==0
-           result=4*y;
-       elseif der_y==1&&der_x==0
-           result=4*x;
-       elseif der_x==1&&der_y==1
-           result=4;
-       elseif der_x>=2||der_y>=2
-           result=0;
-       else
-           error('no such basis fun');
-       end
-       elseif basis_index==6
-       if der_x==0&&der_y==0
-           result=-4*x^2-4*x*y+4*x;    
-       elseif der_x==1&&der_y==0
-           result=-8*x-4*y+4;
-       elseif der_y==1&&der_x==0
-           result=-4*x;
-       elseif der_x==1&&der_y==1
-           result=-4;
+     elseif basis_index == 4
+       if der_x == 0 && der_y == 0
+           result = -4 * x^2 - 4 * x * y + 4 * x;    
+       elseif der_x == 1 && der_y == 0
+           result = -8 * x - 4 * y + 4;
+       elseif der_y == 1 && der_x == 0
+           result = -4 * x;
+       elseif der_x == 1 && der_y == 1
+           result= -4;
        elseif der_x==2&&der_y==0
            result=-8;
        elseif der_y==2&&der_x==0
            result=0;
        elseif der_x+der_y>=3
            result =0;
+       else
+           error('no such basis fun');
+       end
+     elseif basis_index == 5
+       if der_x == 0 && der_y == 0
+           result = 4 * x * y;    
+       elseif der_x == 1 && der_y == 0
+           result = 4 * y;
+       elseif der_y == 1 && der_x == 0
+           result = 4 * x;
+       elseif der_x == 1 && der_y == 1
+           result = 4;
+       elseif der_x >= 2 || der_y >= 2
+           result = 0;
+       else
+           error('no such basis fun');
+       end
+       elseif basis_index == 6
+       if der_x == 0 && der_y == 0
+           result = -4 * y^2 - 4 * x * y + 4 * y;    
+       elseif der_x == 1 && der_y == 0
+           result = -4 * y;
+       elseif der_x == 0 && der_y == 1
+           result = -8 * y - 4 * x + 4;
+       elseif der_x == 1 && der_y == 1
+           result = -4;
+       elseif der_x == 2 && der_y == 0
+           result = 0;
+       elseif der_y == 2 && der_x == 0
+           result = -8;
+       elseif (der_x + der_y) >= 3
+           result = 0;
        else
            error('no such basis fun');
        end
