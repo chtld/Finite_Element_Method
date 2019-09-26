@@ -5,30 +5,36 @@ format long
 %%
 %网格信息
 mesh.type = 'triangular';
-mesh.left = -1;
+mesh.left = 0;
 mesh.right = 1;
-mesh.bottom = -1;
+mesh.bottom = 0;
 mesh.top = 1;
 mesh.hx = 0.25;
 mesh.hy = 0.25;
 
 %%
 %方程信息
-pde.exact_sol.u = @(x, y) x .* y .* (1 - x ./ 2) .* (1 - y) .* exp(x + y);
-pde.exact_sol.u_x = @(x, y) (y - y.^2 - x .* y + x .* y.^2) .* exp(x + y)+(x .* y-x .* y.^2-0.5 .* x.^2 .* y+0.5 .* x.^2 .* y.^2) .* exp(x + y);
-pde.exact_sol.u_y = @(x, y) (x - 2 .* x .* y - 0.5 .* x.^2 + x.^2 .* y) .* exp(x + y) + (x .* y - x .* y.^2 - 0.5 .* x.^2 .* y + 0.5 .* x.^2 .* y.^2) .* exp(x + y);
-pde.rhs = @(x, y) -exp(x + y) .* (y .* (1 - y) .* (1 - x - x.^2 ./ 2) + x .* (1 - x ./ 2) .* (-3 .* y - y.^2));
-pde.coef = @(x, y) 1;
+pde.exact_sol.u = @(x, y, t) exp(x + y + t);
+pde.exact_sol.u_x = @(x, y, t) exp(x + y + t);
+pde.exact_sol.u_y = @(x, y, t) exp(x + y + t);
+pde.intial = @(x, y, t) exp(x + y);
+pde.rhs = @(x, y, t) -3 * exp(x + y + t);
+pde.coef1 = @(x, y, t) 1;
+pde.coef2 = @(x, y, t) 2;
 pde.bdry.num = 1;
-s1 = @(x, y) -1.5 .* y .* (1 - y) .* exp(-1 + y);
-s2 = @(x, y) 0.5 .* y .* (1-y) .* exp(1 + y);
-s3 = @(x, y) -2 .* x .* (1-x./2) .* exp(x - 1);
-s4 = @(x, y) 0;
-b1 = @(x, y) ((x == mesh.left && y ~= mesh.bottom && y ~= mesh.top) .* s1(x, y));
-b2 = @(x, y) ((x == mesh.right && y ~= mesh.bottom && y ~= mesh.top) .* s2(x,y));
-b3 = @(x, y) ((y == mesh.bottom) .* s3(x, y));
-b4 = @(x, y) ((y == mesh.top) .* s4(x, y));
-pde.bdry.u_dirichlet = @(x, y) (b1(x, y) + b2(x, y) + b3(x, y) + b4(x, y));
+pde.initialtime = 0;
+pde.endtime = 1;
+pde.dt = 0.00001;
+pde.theta = 0;
+s1 = @(x, y, t) exp(y + t);
+s2 = @(x, y, t) exp(1 + y + t);
+s3 = @(x, y, t) exp(x + t);
+s4 = @(x, y, t) exp(1 + x + t);
+b1 = @(x, y, t) ((x == mesh.left && y ~= mesh.bottom && y ~= mesh.top) .* s1(x, y, t));
+b2 = @(x, y, t) ((x == mesh.right && y ~= mesh.bottom && y ~= mesh.top) .* s2(x, y, t));
+b3 = @(x, y, t) ((y == mesh.bottom) .* s3(x, y, t));
+b4 = @(x, y, t) ((y == mesh.top) .* s4(x, y, t));
+pde.bdry.u_dirichlet = @(x, y, t) (b1(x, y, t) + b2(x, y, t) + b3(x, y, t) + b4(x, y, t));
 
 %%
 FE.basis_type_test = 201;
@@ -41,6 +47,7 @@ ns = [4, 8, 16, 32, 64];
 for i = 1: length(ns)
     mesh.hx = 1.0 / ns(i);
     mesh.hy = 1.0 / ns(i);
-    [result] = Poisson_solver_2D(pde, mesh, FE);
+%     pde.dt = 1.0 / ns(i)^2;
+    [result] = heat_solver_2D(pde, mesh, FE);
     fprintf('1/%d  \t%e   \t%e   \t%e\n', ns(i), result.error.L_inf, result.errorl.L2, result.error.H1);
 end

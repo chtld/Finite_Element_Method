@@ -42,5 +42,6 @@ for i = 1: length(ns)
     mesh.hx = 1.0 / ns(i);
     mesh.hy = 1.0 / ns(i);
     [result] = Poisson_solver_2D(pde, mesh, FE);
+    plot_figure(mesh, FE, result);
     fprintf('1/%d  \t%e   \t%e   \t%e\n', ns(i), result.error.L_inf, result.errorl.L2, result.error.H1);
 end

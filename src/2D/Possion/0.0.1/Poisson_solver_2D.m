@@ -29,6 +29,7 @@ b = assemble_vector_2D_volume_in_2D(vector_size, pde, mesh, FE, 0,0);
 solution = A\b;
 %------------------------ŒÛ≤Óº∆À„-------------------------------------------%
 result.solution = solution;
+result.exact_solution = compute_exact_solution(pde.exact_sol.u, FE.Pb, FE.Tb);
 % error = compute_error_on_nodes('exact',Pb,solution);
 P = mesh.P;
 T = mesh.T;
